@@ -1,1 +1,3 @@
-console.log("running node 2")
+console.log("running node")
+console.log("THis is the first tutorial on node")
+console.log("Nodemon installed by npm i --save-dev nodemon")
