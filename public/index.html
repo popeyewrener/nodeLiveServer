@@ -1,0 +1,62 @@
+<!-- views/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Stream and Chat App</title>
+    <link rel="stylesheet" href="/styles/styles.css">
+</head>
+<body>
+    <input type="text" id="messageInput" placeholder="Type a message...">
+    <button id="sendButton">Send</button>
+    <div id="chatDisplay"></div>
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        document.getElementById('sendButton').addEventListener('click', () => {
+            const messageInput = document.getElementById('messageInput');
+            const message = messageInput.value;
+
+            if (message.trim() !== '') {
+                socket.emit('sendMessage', message);
+                messageInput.value = '';
+            }
+        });
+
+        socket.on('receiveMessage', (message) => {
+            const chatDisplay = document.getElementById('chatDisplay');
+            const messageElement = document.createElement('div');
+            messageElement.textContent = message;
+            chatDisplay.prepend(messageElement);
+        });
+
+        document.addEventListener('mousemove', (event) => {
+            const mouseCoordinates = {
+                x: event.clientX,
+                y: event.clientY
+            };
+
+            socket.emit('sendMessage', [mouseCoordinates.x,mouseCoordinates.y]);
+        });
+
+        document.addEventListener('keydown', (event) => {
+
+            const keyStroke = event.key;
+            //console.log(keyStroke)
+
+            socket.emit('keyStroke', keyStroke);
+        });
+
+        socket.on('receivekeyStroke', (keyStroke) => {
+            console.log(keyStroke);
+            const chatDisplay = document.getElementById('chatDisplay');
+            const keyStrokeElement = document.createElement('div');
+            keyStrokeElement.textContent = `Key pressed: ${keyStroke}`;
+            chatDisplay.prepend(keyStrokeElement);
+        });
+    </script>
+</body>
+</html>
