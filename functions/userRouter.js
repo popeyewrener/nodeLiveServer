@@ -1,10 +1,24 @@
 const path = require('path');
-const {createUser} = require("./../services/userService")
+const {createUser} = require("./../services/userService");
+const {getUserById} = require("./../services/userService")
 module.exports = {
-    get: (req,res,err)=>{
+    get: async(req,res,err)=>{
+        
+        const id = req.params.id;
+        console.log(id)
+        try{
+            const doc=await getUserById(id);
+            console.log(doc)            
+            res.send(doc);
 
-        console.log(path.join(__dirname , "/../public/index.html"));
-        res.sendFile(path.join(__dirname , "/../public/index.html"));
+        }
+        catch(e){
+            res.send(e);
+
+        }
+        
+
+       
 
     },
     post: async(req,res,err)=>{
@@ -25,4 +39,5 @@ module.exports = {
 
 
     }
+    
 }

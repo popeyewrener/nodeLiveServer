@@ -1,7 +1,12 @@
 // liveRoomInstance model with viewer references
+const mongoose = require('mongoose');
 const liveRoomInstanceSchema = new mongoose.Schema({
     name: String,
     agoraToken: String,
+    desc: String,
+    imageUrl: String,
+    lastUpdated: { type: Date, default: Date.now },
+
     banList: [String],
     viewers: [{
       viewerId: {
@@ -27,8 +32,11 @@ const liveRoomInstanceSchema = new mongoose.Schema({
       ref: 'CommentInstance'
     }],
     chatBanList: [String],
-    totalViewers: [String],
-  });
+    totalViewers: [String]
+
+    
+  },
+  { collection: 'liveRooms' } );
   
-  const LiveRoomInstance = mongoose.model('LiveRoomInstance', liveRoomInstanceSchema);
+module.exports = mongoose.model('LiveRoomInstance', liveRoomInstanceSchema);
   

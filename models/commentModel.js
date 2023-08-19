@@ -7,5 +7,5 @@ const commentInstanceSchema = new mongoose.Schema({
     text: String,
   });
   
-  const CommentInstance = mongoose.model('CommentInstance', commentInstanceSchema);
+module.exports = mongoose.model('CommentInstance', commentInstanceSchema);
   

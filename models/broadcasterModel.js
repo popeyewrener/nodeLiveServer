@@ -5,5 +5,5 @@ const broadcasterInstanceSchema = new mongoose.Schema({
     token: String,
   });
   
-  const BroadcasterInstance = mongoose.model('BroadcasterInstance', broadcasterInstanceSchema);
+module.exports = mongoose.model('BroadcasterInstance', broadcasterInstanceSchema);
   
