@@ -1,11 +1,13 @@
 // commentInstance model
+const mongoose = require('mongoose');
 const commentInstanceSchema = new mongoose.Schema({
     isGift: Boolean,
-    timestamp: Date,
+    timestamp: { type: Date, default: Date.now },
     userId: String,
     amount: Number,
-    text: String,
-  });
+    msg: String,
+  },
+  { collection: 'liveComment' } );
   
 module.exports = mongoose.model('CommentInstance', commentInstanceSchema);
   

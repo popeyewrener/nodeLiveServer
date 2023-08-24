@@ -15,6 +15,7 @@ const socketentryController = require("./controllers/socketentryController");
 const mongo = require("./connectors/mongoConnector");
 const roomRouter = require("./routes/room");
 const mongooseConnector = require("./connectors/mongooseConnector");
+const commentRouter = require("./routes/comment");
 const dburl = 'mongodb://livesignal:livesignal@109.123.235.27:27017/livesignal';
 app.use(express.json());
 
@@ -25,6 +26,7 @@ app.use(cookieParser());
 app.use("/",router);
 app.use("/user",userrouter );
 app.use("/room", roomRouter);
+app.use("/comment", commentRouter);
 mongo.connect();
 mongooseConnector(dburl);
 

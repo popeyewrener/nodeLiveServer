@@ -8,6 +8,12 @@ const liveRoomInstanceSchema = new mongoose.Schema({
     lastUpdated: { type: Date, default: Date.now },
 
     banList: [String],
+    streamer: [{
+      streamerId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref: 'StreamerInstance'
+      }
+    }],
     viewers: [{
       viewerId: {
         type: mongoose.Schema.Types.ObjectId,

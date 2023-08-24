@@ -1,5 +1,6 @@
 const { getDatabase } = require('../connectors/mongoConnector');
 const LiveRoomInstance = require('./../models/LiveRoomModel');
+const { ObjectId } = require('mongodb');
 
 async function createRoom(roomName, token, desc, imageUrl) {
   return new Promise((resolve, reject) => {
@@ -33,7 +34,10 @@ async function createRoom(roomName, token, desc, imageUrl) {
 async function getRoombyIDtoken(id) {
   const db = getDatabase();
   const rooms = db.collection('liveRooms');
-  let room = await rooms.findOne({ agoraToken: id });
+  var idobj = new ObjectId(id);
+  console.log(idobj)
+
+  let room = await rooms.findOne({ _id: idobj });
   return room;
 }
 
@@ -45,8 +49,26 @@ async function getallrooms(){
     return allRooms;
 }
 
+async function addComment(comment, room){
+  
+  
+  comment.save()
+    .then(commentID => {
+      print(commentID)
+      console.log('Room created:', commentID);
+      room.comment.push(commentID);
+
+      resolve(room.toJSON());
+    })
+    .catch(error => {
+      console.error('Error creating room:', error);
+      reject(error);
+    });
+}
+
 module.exports = {
   createRoom,
   getRoombyIDtoken,
-  getallrooms
+  getallrooms,
+  addComment
 };
