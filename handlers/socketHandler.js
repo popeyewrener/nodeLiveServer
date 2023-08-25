@@ -5,7 +5,7 @@ handleSocket = (io,socket)=>{
         io.emit("recieveMessage", message);
     });
     socket.on("roomCreate", async (req)=>{
-        const reqBody = req.body;
+        const reqBody = req;
         const roomname = reqBody.roomname;
         const agoraToken = reqBody.agoraToken;
         const desc = reqBody.desc;
