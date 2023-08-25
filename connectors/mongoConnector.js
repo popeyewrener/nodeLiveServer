@@ -1,13 +1,14 @@
 const MongoClient = require('mongodb').MongoClient;
-serverUrl ="109.123.235.27";
-const url = 'mongodb://livesignal:livesignal@localhost:27017/livesignal'; // MongoDB server URL
+// serverUrl ="109.123.235.27";
+// const url = 'mongodb://livesignal:livesignal@localhost:27017/livesignal'; // MongoDB server URL
 const dbName = 'livesignal'; 
 
 
 
-const client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true });
 
-async function connect() {
+
+async function connect(databaseUrl) {
+  const client = new MongoClient(databaseUrl, { useNewUrlParser: true, useUnifiedTopology: true });
   try {
     await client.connect();
     console.log('Connected to the database');

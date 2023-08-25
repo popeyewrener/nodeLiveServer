@@ -1,3 +1,4 @@
+const { json } = require("express");
 const { createRoom } = require("../services/roomService");
 
 handleSocket = (io,socket)=>{
@@ -5,13 +6,13 @@ handleSocket = (io,socket)=>{
         io.emit("recieveMessage", message);
     });
     socket.on("roomCreate", async (req)=>{
-        const reqBody = req;
+        let reqBody = req;
+        reqBody = JSON.parse(reqBody);
         const roomname = reqBody.roomname;
         const agoraToken = reqBody.agoraToken;
         const desc = reqBody.desc;
         const imageUrl = reqBody.imageUrl;
-        console.log(roomname);
-        console.log(agoraToken)
+      
         
         const room = await createRoom(roomname,agoraToken,desc,imageUrl);
         //console.log(userId);
