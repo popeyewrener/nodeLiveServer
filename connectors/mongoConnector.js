@@ -1,6 +1,6 @@
 const MongoClient = require('mongodb').MongoClient;
-
-const url = 'mongodb://livesignal:livesignal@109.123.235.27:27017/livesignal'; // MongoDB server URL
+serverUrl ="109.123.235.27";
+const url = 'mongodb://livesignal:livesignal@localhost:27017/livesignal'; // MongoDB server URL
 const dbName = 'livesignal'; 
 
 

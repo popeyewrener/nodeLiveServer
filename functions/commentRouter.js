@@ -1,37 +1,32 @@
 const path = require('path');
 const CommentInstance = require("./../models/commentModel")
 const LiveRoomInstance = require("./../models/LiveRoomModel")
-const { getRoombyIDtoken, addComment } = require('../services/roomService');
+const { getRoombyIDtoken, addComment, getRoomComments } = require('../services/roomService');
 module.exports = {
     
-    post: async (req,res,err)=> {
+    postCreateComment: async (req,res,err)=> {
 
         let reqBody = req.body;
         let roomId = reqBody.roomId;
         let userId = reqBody.userId;
         let msg = reqBody.msg;
-        console.log(roomId)
-        console.log(userId);
-        console.log(msg);
+        let amount = reqBody.amount;
+        let isGift = reqBody.isGift;
+          try{
         let room = await getRoombyIDtoken(roomId);
-        console.log(room)
-        if (room){
-            console.log(room)
+        
+        if (room!=null){
             let comment = new CommentInstance({
                 userId: userId,
                 msg:msg,
-                amount:0,
-                isGift:false
-
-                
-            });
+                amount:amount,
+                isGift:isGift,});
             
-            comment.save()
-    .then( async commentID => {
+            comment.save().then( async commentID => {
         try {
             const updatedRoom = await LiveRoomInstance.findByIdAndUpdate(
               roomId,
-              { $push: { comment: comment } },
+              { $push: { comment: commentID } },
               { new: true }
             );
         
@@ -53,6 +48,25 @@ module.exports = {
             
 
         }
+        else{
+          return res.status(401).json({"message":"Room not found"})
+        }
+      }catch(error){
+          console.error('Error creating room:', error);
+          res.status(400).json(error);
+        }
 
     },
+
+    getAllComment: async(req,res,err)=>{
+let reqBody = req.body;
+let roomId = reqBody.roomId;
+let commentList = await getRoomComments(roomId);
+res.status(200).json(commentList);
+
+
+
+    }
+
+    
 }

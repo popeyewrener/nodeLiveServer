@@ -38,7 +38,33 @@ async function getRoombyIDtoken(id) {
   console.log(idobj)
 
   let room = await rooms.findOne({ _id: idobj });
+  
   return room;
+}
+
+async function getRoomComments(id){
+  return new Promise(async (resolve, reject) => {
+    try{
+    let room = await getRoombyIDtoken(id);
+    if (room!=null){
+      const db = await getDatabase();
+      const collection =  db.collection("liveComment");
+      console.log(room.comment)
+      const commentIds = room.comment;
+      const commentsList = await collection.find({ _id: { $in: commentIds } }).toArray();
+      
+        
+
+      resolve(commentsList);  
+
+    }
+    reject({"message":"Room not found"});
+  }catch(e){
+    reject({"error":e});
+  }
+
+  
+});
 }
 
 async function getallrooms(){
@@ -70,5 +96,6 @@ module.exports = {
   createRoom,
   getRoombyIDtoken,
   getallrooms,
-  addComment
+  addComment,
+  getRoomComments
 };
