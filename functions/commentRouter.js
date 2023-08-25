@@ -66,7 +66,8 @@ let roomId = reqBody.roomId;
 let curr_time = new Date().getTime;
 let commentList = await getRoomComments(roomId);
 let endtime = new Date().getTime;
-console.log(endtime - curr_time);
+let elapsed = endtime - curr_time;
+console.log(`Elapsed time: ${elapsed}`);
 res.status(200).json(commentList);
 
 
