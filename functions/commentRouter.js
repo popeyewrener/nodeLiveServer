@@ -13,6 +13,8 @@ module.exports = {
         let amount = reqBody.amount;
         let isGift = reqBody.isGift;
           try{
+            
+
         let room = await getRoombyIDtoken(roomId);
         
         if (room!=null){
@@ -61,7 +63,10 @@ module.exports = {
     getAllComment: async(req,res,err)=>{
 let reqBody = req.body;
 let roomId = reqBody.roomId;
+let curr_time = new Date().getTime;
 let commentList = await getRoomComments(roomId);
+let endtime = new Date().getTime;
+console.log(endtime - curr_time);
 res.status(200).json(commentList);
 
 
