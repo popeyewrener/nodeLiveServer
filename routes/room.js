@@ -1,5 +1,5 @@
 const express = require("express");
-const roomRouter = require("../functions/roomRouter");
+const roomRouter = require("../routers/roomRouter");
 const router = express.Router();
 router.get("/:id",roomRouter.get);
 router.post("/",roomRouter.post);

@@ -1,5 +1,5 @@
 const path = require('path');
-const {createRoom, getRoombyIDtoken, getallrooms} = require("./../services/roomService");
+const {createRoom, getRoombyIDtoken, getallrooms} = require("../services/roomService");
 module.exports = {
 
     get: async(req,res,err)=>{

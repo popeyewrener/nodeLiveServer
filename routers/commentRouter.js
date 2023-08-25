@@ -1,6 +1,6 @@
 const path = require('path');
-const CommentInstance = require("./../models/commentModel")
-const LiveRoomInstance = require("./../models/LiveRoomModel")
+const CommentInstance = require("../models/commentModel")
+const LiveRoomInstance = require("../models/LiveRoomModel")
 const { getRoombyIDtoken, addComment, getRoomComments } = require('../services/roomService');
 module.exports = {
     
