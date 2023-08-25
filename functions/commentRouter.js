@@ -63,9 +63,9 @@ module.exports = {
     getAllComment: async(req,res,err)=>{
 let reqBody = req.body;
 let roomId = reqBody.roomId;
-let curr_time = new Date().getTime;
+let curr_time = new Date().getTime();
 let commentList = await getRoomComments(roomId);
-let endtime = new Date().getTime;
+let endtime = new Date().getTime();
 let elapsed = endtime - curr_time;
 console.log(curr_time);
 console.log(endtimes)
