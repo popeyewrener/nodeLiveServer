@@ -68,7 +68,7 @@ let commentList = await getRoomComments(roomId);
 let endtime = new Date().getTime();
 let elapsed = endtime - curr_time;
 console.log(curr_time);
-console.log(endtimes)
+console.log(endtime)
 console.log(`Elapsed time: ${elapsed}`);
 res.status(200).json(commentList);
 
