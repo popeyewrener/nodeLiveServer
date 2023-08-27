@@ -1,28 +1,8 @@
 const path = require('path');
-const {createUser} = require("../services/userService")
+const {createUser} = require("../services/userService");
+const { mainget } = require('../functions/main_functions/get');
+const { main_post } = require('../functions/main_functions/main_post');
 module.exports = {
-    get: (req,res,err)=>{
-
-        console.log(path.join(__dirname , "/../public/index.html"));
-        res.sendFile(path.join(__dirname , "/../public/index.html"));
-
-    },
-    post: async(req,res,err)=>{
-        const reqBody = req.body;
-        const userName = reqBody.username;
-        const email = reqBody.email;
-        console.log(email);
-        console.log(userName)
-        const userId = await createUser({username:userName,
-        email:email})
-        console.log(userId);
-        res.send({
-            id:userId,
-            userName:userName,
-            email:email
-        })
-
-
-
-    }
+    get: mainget,
+    post: main_post
 }

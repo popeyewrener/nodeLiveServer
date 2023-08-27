@@ -31,6 +31,8 @@ async function createRoom(roomName, token, desc, imageUrl) {
   });
 }
 
+
+
 async function getRoombyIDtoken(id) {
   const db = getDatabase();
   const rooms = db.collection('liveRooms');
