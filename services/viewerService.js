@@ -1,18 +1,38 @@
 
-const LiveRoomInstance = require("../../models/LiveRoomModel");
+const LiveRoomInstance = require("../models/LiveRoomModel");
+
+const ViewerInstance = require("../models/viewerModel");
+
 const { getRoombyIDtoken } = require("./roomService");
-let viewerListadd = async function(userId,roomId){
+
+
+let vieweradd = async function(userId, roomId, diamond, token, canChat){
     return new Promise(async (resolve,reject)=>{
+        console.log(roomId)
         try{
             let room = await getRoombyIDtoken(roomId);
+            //console.log(room)
     if (room!=null){
+        console.log(`room ID:${roomId}`)
+    console.log(`user ID:${userId}`)
+    console.log(`Diamond:${diamond}`)
+    console.log(`token:${token}`)
+    console.log(`can Chat:${canChat}`)
+    let newviewer = new ViewerInstance({ "diamond":diamond, "token":token, "roomId":roomId, "canChat":canChat,"userId":userId});
+    
+    await newviewer.save().then(async objId=>{
+        console.log(objId["_id"])
+        const updatedRoom = await LiveRoomInstance.findByIdAndUpdate(
+            roomId,
+            { $push: { viewers: objId["_id"] } },
+            { new: true }
+          );
+          resolve(updatedRoom);  
+    }).catch(e=>{
+        reject(e);
+    });
      
-      const updatedRoom = await LiveRoomInstance.findByIdAndUpdate(
-        roomId,
-        { $push: { viewers: userId } },
-        { new: true }
-      );
-      resolve(updatedRoom);  
+      
 
     }
     else{
@@ -25,29 +45,43 @@ let viewerListadd = async function(userId,roomId){
         }
     })
 }
-let viewersListremove = async function (userId, roomId){
+let viewerremove = async function (userId, roomId){
     return new Promise (async (resolve, reject)=>{
         try{
-            const updatedRoom = await LiveRoomInstance.findByIdAndUpdate(
-                roomId,
-                { $pop: { viewers: userId } }
+            const deletedviewerdoc = await ViewerInstance.findOneAndDelete(
+               { userId: userId } 
                 
               );
-              resolve(updatedRoom);
+              console.log(deletedviewerdoc);
+              if (deletedviewerdoc!=null){
+                let updatedRoom = await LiveRoomInstance.findByIdAndUpdate(
+                    roomId,
+                    { $pull: { viewers: deletedviewerdoc["_id"] } },{ new: true }); 
+                    resolve(updatedRoom);
+              }
+              else{
+                console.log("entering else")
+                reject({"message":"viewer not found", "status":400})
+
+              }
+                
         }
         catch(e){
             reject(e);
+            
         }
     })
 }
 
-let viewersListget = async function (roomId){
+let viewerget = async function (roomId){
     return new Promise(async (resolve,reject)=>{
         try{
             let room = await getRoombyIDtoken(roomId);
+            
             if (room!=null){
-                let viewersList = room.viewers;
-                resolve(viewersList);
+                let viewerlist = await ViewerInstance.find({roomId:roomId});
+                console.log(viewerlist);
+                resolve(viewerlist);
             
             
             }
@@ -62,4 +96,4 @@ reject(e)
     })
 }
 
-module.exports = {viewerListadd, viewersListget,viewersListremove}
+module.exports = {vieweradd,viewerget, viewerremove}

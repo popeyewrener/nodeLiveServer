@@ -17,7 +17,7 @@ handleSocket = (io,socket)=>{
         const room = await createRoom(roomname,agoraToken,desc,imageUrl);
         //console.log(userId);
         console.log(room);
-        socket.emit("roomDetail", room)
+        socket.emit("roomDetails", room)
         
     });
 

@@ -60,8 +60,13 @@ async function getRoomComments(id){
       resolve(commentsList);  
 
     }
-    reject({"message":"Room not found"});
+    else{
+      reject({"status":401,
+    message:"Room not found"})
+    }
+    
   }catch(e){
+    console.log("entering catch error block")
     reject({"error":e});
   }
 

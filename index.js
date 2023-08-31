@@ -18,6 +18,7 @@ const mongooseConnector = require("./connectors/mongooseConnector");
 const commentRouter = require("./routes/comment");
 const banListRouter = require("./routes/banList");
 const broadcasterRouter = require("./routes/broadcasterList");
+const viewerRouter = require("./routes/viewer");
 const dburl = 'mongodb://livesignal:livesignal@109.123.235.27:27017/livesignal';
 const dotenv = require("dotenv").config();
 const databaseUrl = process.env.SERVERURL;
@@ -33,6 +34,7 @@ app.use("/room", roomRouter);
 app.use("/comment", commentRouter);
 app.use("/banList", banListRouter);
 app.use("/broadcaster", broadcasterRouter);
+app.use("/viewer", viewerRouter );
 mongo.connect(databaseUrl);
 mongooseConnector(databaseUrl);
 

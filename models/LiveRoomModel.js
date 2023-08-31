@@ -9,23 +9,21 @@ const liveRoomInstanceSchema = new mongoose.Schema({
 
     banList: [String],
     streamer: [{
-      streamerId:{
         type:mongoose.Schema.Types.ObjectId,
         ref: 'StreamerInstance'
-      }
-    }],
+}],
     viewers: [{
-      viewerId: {
+       
         type: mongoose.Schema.Types.ObjectId,
         ref: 'ViewerInstance'
       },
       // You can add more fields related to each viewer in this map
-    }],
+    ],
     broadcaster: [{
-      broadcasterId: {
+      
         type: mongoose.Schema.Types.ObjectId,
         ref: 'BroadcasterInstance'
-      },
+      
       // You can add more fields related to each broadcaster in this map
     }],
     admin: [String],

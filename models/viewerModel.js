@@ -1,10 +1,15 @@
+const { ObjectId } = require("mongodb");
+const { default: mongoose } = require("mongoose");
+
 // viewerInstance model
 const viewerInstanceSchema = new mongoose.Schema({
-    userID: String,
+    userId: Number,
     token: String,
-    diamonds: Number,
-    canChat: Boolean,
-  });
+    diamond: Number,
+    roomId: ObjectId,
+    canChat: Boolean
+  },
+  {collection: "liveViewer"});
   
-  const ViewerInstance = mongoose.model('ViewerInstance', viewerInstanceSchema);
+  module.exports = mongoose.model('ViewerInstance', viewerInstanceSchema);
   

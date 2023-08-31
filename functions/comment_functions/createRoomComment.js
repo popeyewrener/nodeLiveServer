@@ -20,7 +20,8 @@ let createRoomComment = async (req,res,err)=> {
             userId: userId,
             msg:msg,
             amount:amount,
-            isGift:isGift,});
+            isGift:isGift,
+          room:roomId});
         
         comment.save().then( async commentID => {
     try {

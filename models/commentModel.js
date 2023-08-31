@@ -1,4 +1,5 @@
 // commentInstance model
+const { ObjectId } = require('mongodb');
 const mongoose = require('mongoose');
 const commentInstanceSchema = new mongoose.Schema({
     isGift: Boolean,
@@ -6,6 +7,7 @@ const commentInstanceSchema = new mongoose.Schema({
     userId: String,
     amount: Number,
     msg: String,
+    room: ObjectId
   },
   { collection: 'liveComment' } );
   

@@ -1,12 +1,13 @@
-const { broadcasterremove } = require("../../services/broadcasterService");
 
-let deleteBroadasterList = async(req,res,err)=>{
+const { viewerremove } = require("../../services/viewerService");
+
+let deleteViewerList = async(req,res,err)=>{
     let reqBody = req.body;
     let roomId = reqBody.roomId;
     let userId = reqBody.userId;
     let curr_time = new Date().getTime();
-    try{let broadcastlist = await broadcasterremove(userId, roomId);
-        res.status(200).json(broadcastlist);}
+    try{let viewerlist = await viewerremove(userId, roomId);
+        res.status(200).json(viewerlist);}
         catch(e){
             res.status(400).json(e);
         }
@@ -18,4 +19,4 @@ let deleteBroadasterList = async(req,res,err)=>{
     
     }        
 
-module.exports = {deleteBroadasterList}    
+module.exports = {deleteViewerList}    
