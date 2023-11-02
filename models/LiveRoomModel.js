@@ -6,19 +6,17 @@ const liveRoomInstanceSchema = new mongoose.Schema({
     desc: String,
     imageUrl: String,
     lastUpdated: { type: Date, default: Date.now },
-
     banList: [String],
-    streamer: [{
-        type:mongoose.Schema.Types.ObjectId,
-        ref: 'StreamerInstance'
-}],
     viewers: [{
-       
         type: mongoose.Schema.Types.ObjectId,
         ref: 'ViewerInstance'
       },
       // You can add more fields related to each viewer in this map
     ],
+    gifts:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'GiftInstance'
+    }],
     broadcaster: [{
       
         type: mongoose.Schema.Types.ObjectId,
@@ -35,8 +33,13 @@ const liveRoomInstanceSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'CommentInstance'
     }],
+    
+
     chatBanList: [String],
-    totalViewers: [String]
+    totalViewers: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'ViewerInstance'
+      },]
 
     
   },

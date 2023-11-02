@@ -10,11 +10,6 @@ let addViewerList = async(req,res,err)=>{
     let token = reqBody.token;
     let canChat = reqBody.canChat;
     let curr_time = new Date().getTime();
-    console.log(`room ID:${roomId}`)
-    console.log(`user ID:${userId}`)
-    console.log(`Diamond:${diamond}`)
-    console.log(`token:${token}`)
-    console.log(`can Chat:${canChat}`)
     try{
         let viewerlist = await vieweradd(userId, roomId, diamond, token, canChat);
         res.status(200).json(viewerlist);}

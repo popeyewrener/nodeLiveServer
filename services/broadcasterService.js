@@ -9,19 +9,27 @@ let broadcasteradd = async function(userId, roomId, diamond, token){
         try{
             let room = await getRoombyIDtoken(roomId);
     if (room!=null){
-    let newbroadcaster = new BroadcasterInstance({"userId":userId, "diamond":diamond, "token":token, "roomId":roomId});
+        let broadcaster = await broadcastercheck(userId,roomId);
+    if (broadcaster==null){
+        let newbroadcaster = new BroadcasterInstance({"userId":userId, "diamond":diamond, "token":token, "roomId":roomId});
+        newbroadcaster.save().then(async objId=>{
+            //console.log(objId["_id"])
+            const updatedRoom = await LiveRoomInstance.findByIdAndUpdate(
+                roomId,
+                { $push: { broadcaster: objId["_id"] } },
+                { new: true }
+              );
+              resolve(updatedRoom);  
+        }).catch(e=>{
+            reject(e);
+        });
+    }
+    else{
+        reject("Broadcaster already exists");
+    }
     
-    newbroadcaster.save().then(async objId=>{
-        //console.log(objId["_id"])
-        const updatedRoom = await LiveRoomInstance.findByIdAndUpdate(
-            roomId,
-            { $push: { broadcaster: objId["_id"] } },
-            { new: true }
-          );
-          resolve(updatedRoom);  
-    }).catch(e=>{
-        reject(e);
-    });
+    
+    
      
       
 
@@ -33,6 +41,28 @@ let broadcasteradd = async function(userId, roomId, diamond, token){
         }
         catch(error){
             reject(error)
+        }
+    })
+}
+
+let broadcastercheck = async function (userId, roomId){
+    return new Promise (async (resolve, reject)=>{
+        try{
+            const broadcasterdoc = await BroadcasterInstance.find(
+                {userId:userId, roomId:roomId}
+            );
+            
+            resolve(broadcasterdoc)
+
+
+            
+        }
+        catch(e){
+
+            
+            reject(e)
+
+
         }
     })
 }
@@ -86,4 +116,4 @@ reject(e)
     })
 }
 
-module.exports = {broadcasteradd,broadcasterget, broadcasterremove}
+module.exports = {broadcasteradd,broadcasterget, broadcasterremove, broadcastercheck}

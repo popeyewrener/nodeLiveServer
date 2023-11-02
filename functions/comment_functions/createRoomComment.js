@@ -19,9 +19,7 @@ let createRoomComment = async (req,res,err)=> {
         let comment = new CommentInstance({
             userId: userId,
             msg:msg,
-            amount:amount,
-            isGift:isGift,
-          room:roomId});
+            room:roomId});
         
         comment.save().then( async commentID => {
     try {

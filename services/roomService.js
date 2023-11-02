@@ -4,6 +4,10 @@ const { ObjectId } = require('mongodb');
 
 async function createRoom(roomName, token, desc, imageUrl) {
   return new Promise((resolve, reject) => {
+    if (!roomName || !token || !desc || !imageUrl) {
+      return reject(new Error('One or more required variables are undefined.'));
+    }
+    
     const newRoom = new LiveRoomInstance({
       name: roomName,
       desc:desc,
