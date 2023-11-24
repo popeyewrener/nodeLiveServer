@@ -3,23 +3,14 @@ const {createUser} = require("../services/userService");
 const {getUserById} = require("../services/userService")
 module.exports = {
     get: async(req,res,err)=>{
-        
         const id = req.params.id;
         console.log(id)
         try{
             const doc=await getUserById(id);
             console.log(doc)            
-            res.send(doc);
-
-        }
+            res.send(doc);}
         catch(e){
-            res.send(e);
-
-        }
-        
-
-       
-
+            res.send(e);}
     },
     post: async(req,res,err)=>{
         const reqBody = req.body;
@@ -34,10 +25,6 @@ module.exports = {
             id:userId,
             userName:userName,
             email:email
-        })
-
-
-
-    }
+        })}
     
 }

@@ -43,7 +43,8 @@ async function getRoombyIDtoken(id) {
   var idobj = new ObjectId(id);
   console.log(idobj)
 
-  let room = await rooms.findOne({ _id: idobj });
+  let room = await rooms.findOne({ _id: idobj,
+    });
   
   return room;
 }

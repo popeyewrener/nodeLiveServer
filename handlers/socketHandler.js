@@ -10,7 +10,7 @@ handleSocket = (io,socket,userid)=>{
     socket.on("sendMessage", (message)=>{
         io.emit("recieveMessage", message);
     });
-    socket.on("create_room", async (req)=>{
+    socket.on("create_room", async (req, ack)=>{
         let reqBody = req ;
         const roomname = reqBody.roomname;  
         const agoraToken = reqBody.agoraToken;
@@ -21,12 +21,12 @@ handleSocket = (io,socket,userid)=>{
       try {
         const room = await createRoom(roomname, agoraToken, desc, imageUrl);
         console.log(room);
-        socket.emit("roomDetails", room)
+        ack({"data":room});
         // Handle the resolved promise (room was created successfully)
       } catch (e) {
         // Handle the rejected promise (an error occurred)
         console.error('Error creating room:', e);
-    socket.emit("roomDetails", e.message)
+        ack({"data":e});
         // You can also respond to the client with an error message if this is an HTTP route handler
       }
         //console.log(userId);

@@ -59,8 +59,7 @@ let viewerremove = async function (userId, roomId){
                     { $pull: { viewers: deletedviewerdoc["_id"] } },{ new: true }); 
                     resolve(updatedRoom);
               }
-              else{
-                console.log("entering else")
+              else{ console.log("entering else")
                 reject({"message":"viewer not found", "status":400})
 
               }

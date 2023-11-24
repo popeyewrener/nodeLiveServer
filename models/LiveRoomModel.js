@@ -5,6 +5,8 @@ const liveRoomInstanceSchema = new mongoose.Schema({
     agoraToken: String,
     desc: String,
     imageUrl: String,
+    isPK: Boolean,
+    pkRoomId: String,
     lastUpdated: { type: Date, default: Date.now },
     banList: [String],
     viewers: [{
